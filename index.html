@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@0.2.3/dist/bubbly-bg.js"></script>
     <script>
         bubbly();
-
     </script>
 
     <style>
@@ -52,7 +51,6 @@
             width: 100vw;
             opacity: 0.9;
         }
-
     </style>
 
     <svg></svg>
@@ -73,7 +71,7 @@
             .size([diameter - margin, diameter - margin])
             .padding(2);
 
-        d3.json("flare.json", function(error, root) {
+        d3.json("http://172.245.155.108:8080/streamersoftopgames", function(error, root) {
             if (error) throw error;
 
             root = d3.hierarchy(root)
@@ -171,77 +169,8 @@
                 });
             }
         });
-
-        function initData() {
-            d3.json("config.json", function(error, config) {
-                if (error) throw error;
-                getTopGames(config);
-            });
-        }
-
-        function refreshData(d) {}
-
-        function getTopGames(d) {
-            var xmlhttp = new XMLHttpRequest();
-            var url = "https://api.twitch.tv/helix/games/top";
-
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var apiData = JSON.parse(this.responseText);
-                    updateTopGames(apiData);
-                }
-            };
-
-            xmlhttp.open("GET", url, true);
-            xmlhttp.setRequestHeader('Client-ID', d.clientID)
-            xmlhttp.send();
-        }
-
-        function updateTopGames(d) {
-            console.log(d);
-        }
-
-        function getStreams(d) {
-            var xmlhttp = new XMLHttpRequest();
-            var url = "https://api.twitch.tv/helix/streams?first=100&type=live&language=en";
-
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var apiData = JSON.parse(this.responseText);
-                    updateTopGames(apiData);
-                }
-            };
-
-            xmlhttp.open("GET", url, true);
-            xmlhttp.setRequestHeader('Client-ID', d.clientID)
-            xmlhttp.send();
-        }
-
-        function updateStreams(d) {
-            console.log(d);
-        }
-
-        function getUsers(d) {
-            var xmlhttp = new XMLHttpRequest();
-            var url = "https://api.twitch.tv/helix/users?first=100";
-
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var apiData = JSON.parse(this.responseText);
-                    updateTopGames(apiData);
-                }
-            };
-
-            xmlhttp.open("GET", url, true);
-            xmlhttp.setRequestHeader('Client-ID', d.clientID)
-            xmlhttp.send();
-        }
-
-        function updateUsers(d) {
-            console.log(d);
-        }
-
     </script>
 </body>
 
 </html>
+
